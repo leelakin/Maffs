@@ -1,0 +1,101 @@
+body{
+	font: 1em Helvetica, sans-serif; /*can add line height later after font size*/
+	margin:0px;
+	padding:0px;
+	background-color:green;
+}
+
+header, section, footer, aside, nav, main, article, figure {
+    display: block; 
+}
+
+#mainwrap{
+	margin: 0px;
+	height:auto;
+	min-height:100px;
+	width:100%;
+	background-color:red;
+	position:absolute;
+}
+
+#banner{
+	padding:10px 0px;
+	min-height:80px;
+}
+#banner, footer{
+	height:auto;
+	width:100%;
+	margin:0px;
+	background-color:#47B5FF;
+}
+
+#banner .logo{
+	height:80px;
+	width:80px;
+	border-radius:50%;
+	margin:0 auto;
+	background-color:white;
+	vertical-align: middle;
+}
+
+.choicesec{
+	width:100%;
+	height:auto;
+	min-height:10px;
+	margin:0px;
+	background-color:#90d;
+	border-color:black;
+	border-bottom-style: solid;
+	text-align:center;
+	font-size:2em;
+	font-weight:bold;
+}
+.choicesec .headl{
+	padding: 10px 0px;
+	margin:0px;
+}
+
+.choicesec .cont{
+	min-height: 100px;
+	display:none;
+	font-size:0.5em;
+	font-weight:normal;
+	padding-top:5px;   
+	margin:0px;                                                                                                                                                                                                                                                                     
+}
+
+.choicesec .add.headl{
+	background-color: #B8E65C;
+}
+.choicesec .add.cont{
+	background-color: #EBFFC2;
+}
+.choicesec .sub.headl{
+	background-color: #f99;
+}
+.choicesec .sub.cont{
+	background-color: #FFE0E0;
+}
+.choicesec .mult.headl{
+	background-color: #00E6E6;
+}
+.choicesec .mult.cont{
+	background-color: #CCFAFA;
+}
+.choicesec .div.headl{
+	background-color: #FF85D6;
+}
+.choicesec .div.cont{
+	background-color: #FFE0F0;
+}
+.choicesec .prime.headl{
+	background-color: #FFCC66;
+}
+.choicesec .prime.cont{
+	background-color: #FFEBC2;
+}
+
+footer{
+	padding:20px 0px 5px 0px;
+	min-height:30px;
+}
