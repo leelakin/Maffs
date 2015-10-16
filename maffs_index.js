@@ -1,5 +1,6 @@
 
-$(".choicesec").on("click", ".headl", function(){
+$(".choicesec").on("click", ".headl", function(event){
+	event.preventDefault();
 	var $this = $(this);
 	var $content = $this.closest(".choicesec").find(".cont");
 
@@ -9,7 +10,7 @@ $(".choicesec").on("click", ".headl", function(){
 		$(".activeSlide").slideUp();
 		$(".activeSlide").removeClass("activeSlide");
 		$content.addClass("activeSlide");
-		runAjaxCall($content);
+		//runAjaxCall($content);
 		$content.slideDown();
 
 	}else{
@@ -17,18 +18,52 @@ $(".choicesec").on("click", ".headl", function(){
 		$content.slideUp();
 		$(".activeSlide").removeClass("activeSlide");
 	};
+
+	if($content.hasClass("add")){
+		addRandomiser();
+	};
+
 });
 
-var runAjaxCall = function(sectionType){
+var addRandomiser = function(){
+
+	var x = Math.round((Math.random())*10);
+	var y = Math.round((Math.random())*10);
+	var addproblem = x+ " + " +y+ " = " + "<input type=\"text\" id=\"addfield\" placeholder=\"result\"> <input type=\"submit\" id=\"addsubmit\">";
+	$("#addmaffs").html(addproblem);
+
+	$("#addsubmit").on("click", function(){
+		var answer = $("#addfield").val();
+		if(isNaN(answer)){
+			alert("Please enter a valid number.");
+		}else{
+			if(answer == (x+y)){
+				alert("Right!");
+			}else{
+				alert("Wrong! Try again.");
+			}
+		}
+	})
+	//when submit is clicked, get .val() & see if it's a number. alert.
+	//check whether number is the right result; alert.
+
+	$("#newadd").on("click", function(){
+		addRandomiser(); //is this a safe way to just refresh the inner HTML?
+	});
+};
+
+
+
+/*var runAjaxCall = function(sectionType){
 
 	if(sectionType.hasClass("add")){
-		alert("add");
-		$.ajax("http://www.leelakin.com/code/maffs_addition.html", { //local works in Firefox, not Chrome.
-			//this url works in neither, throws empty error
+
+		$.ajax("maffs_addition.html", { //local works in Firefox, not Chrome.
+			//this url works in neither when all is uploaded, throws empty error
 			type: "GET",
 			dataType: "html",
 			success: function(response){
-				sectionType.html(response);
+				sectionType.append(response);
 			},
 			error: function(request,errorType,errorMsg){
 				alert("Error: "+errorType+" with message: "+errorMsg);
@@ -45,4 +80,4 @@ var runAjaxCall = function(sectionType){
 		alert("prime");
 	};
 
-};
+};*/

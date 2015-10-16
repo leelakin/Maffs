@@ -60,16 +60,21 @@ header, section, footer, aside, nav, main, article, figure {
 	display:none;
 	font-size:0.5em;
 	font-weight:normal;
-	padding-top:5px;   
+	padding: 15px 0px; 
 	margin:0px;                                                                                                                                                                                                                                                                     
 }
-
+	
 .choicesec .add.headl{
 	background-color: #B8E65C;
 }
 .choicesec .add.cont{
 	background-color: #EBFFC2;
 }
+.choicesec .add.cont #addfield{
+	width:50px;
+	padding: 0px 5px;
+}
+
 .choicesec .sub.headl{
 	background-color: #f99;
 }
