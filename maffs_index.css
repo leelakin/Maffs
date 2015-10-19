@@ -19,7 +19,7 @@ header, section, footer, aside, nav, main, article, figure {
 }
 
 #banner{
-	padding:10px 0px;
+	padding:4px 0px;
 	min-height:80px;
 }
 #banner, footer{
@@ -29,12 +29,10 @@ header, section, footer, aside, nav, main, article, figure {
 	background-color:#47B5FF;
 }
 
-#banner .logo{
-	height:80px;
-	width:80px;
-	border-radius:50%;
-	margin:0 auto;
-	background-color:white;
+#banner .logo.img{
+	width: 70%;
+	max-width: 468px;
+	margin: 5px auto;
 	vertical-align: middle;
 }
 
@@ -51,17 +49,84 @@ header, section, footer, aside, nav, main, article, figure {
 	font-weight:bold;
 }
 .choicesec .headl{
-	padding: 10px 0px;
+	padding: 15px 0px;
 	margin:0px;
 }
-
 .choicesec .cont{
 	min-height: 100px;
 	display:none;
-	font-size:0.5em;
+	font-size:0.7em;
 	font-weight:normal;
 	padding: 15px 0px; 
 	margin:0px;                                                                                                                                                                                                                                                                     
+}
+.choicesec .cont .bubble{
+	width:60%;
+	min-height: 55px;
+	margin: 5px 0px;
+	padding: 5px;
+	background-color: #fff;
+	font-size: 0.8em;
+	text-align: left;
+	vertical-align: middle;
+	color: #666;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	margin-bottom: 6px;
+}
+.speech.img{
+	display:inline-block;
+	width:20%;
+	max-width:100px;
+}
+.choicesec .cont .comment .bubble{
+	display:inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+
+input.field{
+	vertical-align: middle;
+	width: 50px;
+	min-height: 29px;
+	border: 3px dotted #39f;
+	border-radius: 10px;
+	padding: 0px 10px 5px 10px;
+	margin-right: 5px;
+	background-color: #fff;
+}
+button{
+	min-width: 60px;
+	min-height:40px;
+	border: 2px solid #989898;
+	border-radius: 10px;
+	font-size:0.73em;
+	padding:8px;
+	background-color: #E7E7E7;
+}
+#newadd, #newsub, #newdiv, #newmult, #newprime{
+	display:none;
+}
+
+::-webkit-input-placeholder {
+   font-size:1.4em;
+   line-height: 1em;
+   vertical-align: middle;
+}
+:-moz-placeholder { /* Firefox 18- */
+   font-size:1.4em;
+   line-height: 1em;
+   vertical-align: middle;
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   font-size:1.4em;
+   line-height: 1em;
+   vertical-align: middle;
+}
+:-ms-input-placeholder {
+   font-size:1.4em;
+   line-height: 1em;
+   vertical-align: middle;
 }
 	
 .choicesec .add.headl{
@@ -70,11 +135,6 @@ header, section, footer, aside, nav, main, article, figure {
 .choicesec .add.cont{
 	background-color: #EBFFC2;
 }
-.choicesec .add.cont #addfield{
-	width:50px;
-	padding: 0px 5px;
-}
-
 .choicesec .sub.headl{
 	background-color: #f99;
 }
@@ -98,6 +158,12 @@ header, section, footer, aside, nav, main, article, figure {
 }
 .choicesec .prime.cont{
 	background-color: #FFEBC2;
+}
+.choicesec .headl{
+	color:#000; /*for IE8-*/
+	color: rgba(0, 0, 13, 0.9);
+	/*opacity at 90%
+	text-shadow: 0 0 20px white, 0 0 0 black;*/
 }
 
 footer{
