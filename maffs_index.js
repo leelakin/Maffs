@@ -9,18 +9,7 @@ $(".choicesec").on("click", ".headl", function(event){
 		$(".activeSlide").removeClass("activeSlide");
 		$content.addClass("activeSlide");
 
-		if($content.hasClass("add")){
-			addRandomiser($content);
-		}else if($content.hasClass("sub")){
-			subRandomiser($content);
-		}else if($content.hasClass("mult")){
-			alert("not ready yet");
-		}else if($content.hasClass("div")){
-			divRandomiser();
-		}else if($content.hasClass("prime")){
-			alert("not ready yet");
-		};
-
+		problemBuilder($content);
 		$content.slideDown();
 
 	}else{
@@ -29,95 +18,63 @@ $(".choicesec").on("click", ".headl", function(event){
 	};
 });
 
-
-var addRandomiser = function($content){
-	$("#newadd").hide();
-	var x = Math.round((Math.random())*100); //not refreshing these when tab reopened
-	var y = Math.round((Math.random())*100); //just displays last state before slideUp
-	var addproblem = x+ " <b>+</b> " +y+ " = " + "<input type=\"text\" class=\"field\" id=\"addfield\" placeholder=\"result\"> <button type=\"submit\" id=\"addsubmit\">Enter</button>";
-	$("#addmaffs").html(addproblem);
-
-	$("#addsubmit").on("click", function(event){
-		event.preventDefault;
-		var answer = $("#addfield").val();
-		var $bubble = $content.find(".bubble");
-		if(isNaN(answer) || answer ===""){
-			$bubble.html("Please enter a valid number! No letters or symbols.");
+//RESULT CHECKER
+var resultChecker = function($content, answer, correctAnswer){
+	var $bubble = $content.find(".bubble");
+	if(isNaN(answer) || answer ===""){
+		$bubble.text("Please enter a valid number! No letters or symbols.");
+	}else{
+		if(answer == correctAnswer){
+			$content.find(".img").attr("src","rightimg2.png");
+			$bubble.html("Well done! The correct answer is " +correctAnswer+ ". Click below to solve the next problem!");
+			$content.find(".refresh").show();
 		}else{
-			if(answer == (x+y)){
-				$content.find(".img").attr("src","rightimg2.png");
-				$bubble.html("Well done! The correct answer is " +(x+y)+ ". Click below to solve the next problem!");
-				$("#newadd").show();
-			}else{
-				$content.find(".img").attr("src","tryagimg2.png");
-				$bubble.html("Wrong answer! But don't worry, try again! [help icon]");
-			}
+			$content.find(".img").attr("src","tryagimg2.png");
+			$bubble.html("Wrong answer! But don't worry, try again! [help icon]");
 		}
+	}
+};
+
+//PROBLEM BUILDER
+var problemBuilder = function($content){
+	var x = Math.round((Math.random())*100); 
+	var y = Math.round((Math.random())*100);
+	var correctAnswer = x+y; //addition is the default case
+	var probSymbol = "+";
+
+	if($content.hasClass("sub")){
+		while(y>x){
+			var y = Math.round((Math.random())*100);
+		};
+		correctAnswer = x-y; probSymbol = "-"; //set up answer & symbol for each case
+	}else if($content.hasClass("div")){
+		while(x%y!==0 || x==0 || y==0){
+			var x = Math.round((Math.random())*100);
+			var y = Math.round((Math.random())*100);
+		};
+		correctAnswer = x/y; probSymbol = "/";
+	}else if($content.hasClass("mult")){
+		var x = Math.round((Math.random())*10); 
+		var y = Math.round((Math.random())*10);
+		correctAnswer = x*y; probSymbol = "*";
+	}else if($content.hasClass("prime")){
+		correctAnswer = alert("not yet set up"); probSymbol = alert("not yet set up");
+	};
+
+	var problem = x+ " <b>"+probSymbol+"</b> " +y+ " = " + "<input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
+	
+	$content.find(".refresh").hide();
+	$content.find(".problem").html(problem);
+	
+	$(".submit").on("click", function(event){
+		event.preventDefault();
+		var answer = $(".field").val();
+		resultChecker($content, answer, correctAnswer); //delegate
 	});
-	$("#newadd").on("click", function(event){
-		event.preventDefault;
-		addRandomiser($content); //is this a safe way to just refresh the inner HTML?
+	$content.on("click",".refresh", function(event){
+		event.preventDefault();
+		problemBuilder($content); //is this a safe way to just refresh the inner HTML?
 		$(this).hide();
-	});
+		$content.find(".bubble").text("Maths is really fun when you get the hang of it! [help icon]");
+	});	
 };
-
-var subRandomiser = function($content){
-	var x = Math.round((Math.random())*100);
-	var y = Math.round((Math.random())*100);
-	while(y>x){
-		var y = Math.round((Math.random())*100);
-	};
-	var subproblem = x+ " - " +y+ " = " + "<input type=\"text\" class=\"field\" id=\"subfield\" placeholder=\"result\"> <button type=\"submit\" id=\"subsubmit\">Enter</button>";
-	$("#submaffs").html(subproblem);
-
-	$("#subsubmit").on("click", function(){
-		var answer = $("#subfield").val();
-		if(isNaN(answer) || answer ===""){
-			alert("Please enter a valid number.");
-		}else{
-			if(answer == (x-y)){
-				alert("Right!"); //change to HTML insert of Fox
-			}else{
-				alert("Wrong! Try again."); //change to HTML insert of help
-			}
-		}
-	});
-
-	$("#newsub").on("click", function(event){
-		event.preventDefault;
-		subRandomiser(); //is this a safe way to just refresh the inner HTML?
-	});
-
-};
-
-var divRandomiser = function(){
-	var x = Math.round((Math.random())*100);
-	var y = Math.round((Math.random())*100);
-	while(x%y!==0 || x==0 || y==0){
-		var x = Math.round((Math.random())*100);
-		var y = Math.round((Math.random())*100);
-	};
-
-	var divproblem = x+ " / " +y+ " = " + "<input type=\"text\" class=\"field\" id=\"divfield\" placeholder=\"result\"> <button type=\"submit\" id=\"divsubmit\">Enter</button>";
-	$("#divmaffs").html(divproblem);
-
-	$("#divsubmit").on("click", function(event){
-		event.preventDefault;
-		var answer = $("#divfield").val()
-		if(isNaN(answer) || answer ===""){
-			alert("Please enter a valid number.");
-		}else{
-			if(answer == (x/y)){
-				alert("Right!"); //change to HTML insert of Fox
-			}else{
-				alert("Wrong! Try again."); //change to HTML insert of help
-			}
-		}		
-	})
-
-	$("#newdiv").on("click", function(event){
-		event.preventDefault;
-		divRandomiser(); //is this a safe way to just refresh the inner HTML?
-	});
-};
-
