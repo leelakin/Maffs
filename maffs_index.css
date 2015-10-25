@@ -55,7 +55,7 @@ header, section, footer, aside, nav, main, article, figure {
 .choicesec .cont{
 	min-height: 100px;
 	display:none;
-	font-size:0.7em;
+	font-size:0.6em;
 	font-weight:normal;
 	padding: 15px 0px; 
 	margin:0px;                                                                                                                                                                                                                                                                     
@@ -104,7 +104,7 @@ button{
 	padding:8px;
 	background-color: #E7E7E7;
 }
-#newadd, #newsub, #newdiv, #newmult, #newprime{
+.refresh{
 	display:none;
 }
 
@@ -162,8 +162,33 @@ button{
 .choicesec .headl{
 	color:#000; /*for IE8-*/
 	color: rgba(0, 0, 13, 0.9);
-	/*opacity at 90%
-	text-shadow: 0 0 20px white, 0 0 0 black;*/
+}
+
+.bulb{
+	width:10%;
+	max-width:15px;
+}
+#closeX{
+	margin-top: 0px;
+	display:block;
+	padding: 0px;
+	text-align: right;
+	color:red;
+	font-size: 2em;
+	opacity:1;
+}
+#help{
+	display:none;
+	width: 90%;
+	box-sizing:border-box;
+	position: fixed;
+	top: 30px;
+	left: 5%;
+	min-height:300px;
+	padding: 10px 20px;
+	background-color:#fff;
+	border-radius: 10px;
+	opacity:0.95;
 }
 
 footer{
