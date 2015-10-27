@@ -2,7 +2,7 @@ body{
 	font: 1em Helvetica, sans-serif; /*can add line height later after font size*/
 	margin:0px;
 	padding:0px;
-	background-color:green;
+	background-color:#47B5FF;
 }
 
 header, section, footer, aside, nav, main, article, figure {
@@ -14,8 +14,6 @@ header, section, footer, aside, nav, main, article, figure {
 	height:auto;
 	min-height:100px;
 	width:100%;
-	background-color:red;
-	position:absolute;
 }
 
 #banner{
@@ -31,7 +29,7 @@ header, section, footer, aside, nav, main, article, figure {
 
 #banner .logo.img{
 	width: 70%;
-	max-width: 468px;
+	max-width: 400px;
 	margin: 5px auto;
 	vertical-align: middle;
 }
@@ -77,14 +75,16 @@ header, section, footer, aside, nav, main, article, figure {
 .speech.img{
 	display:inline-block;
 	width:20%;
-	max-width:100px;
+	max-width:90px;
 }
 .choicesec .cont .comment .bubble{
 	display:inline-block;
 	vertical-align: top;
 	text-align: left;
 }
-
+input{
+	font-size: 16px;
+}
 input.field{
 	vertical-align: middle;
 	width: 50px;
@@ -103,30 +103,10 @@ button{
 	font-size:0.73em;
 	padding:8px;
 	background-color: #E7E7E7;
+
 }
 .refresh{
 	display:none;
-}
-
-::-webkit-input-placeholder {
-   font-size:1.4em;
-   line-height: 1em;
-   vertical-align: middle;
-}
-:-moz-placeholder { /* Firefox 18- */
-   font-size:1.4em;
-   line-height: 1em;
-   vertical-align: middle;
-}
-::-moz-placeholder {  /* Firefox 19+ */
-   font-size:1.4em;
-   line-height: 1em;
-   vertical-align: middle;
-}
-:-ms-input-placeholder {
-   font-size:1.4em;
-   line-height: 1em;
-   vertical-align: middle;
 }
 	
 .choicesec .add.headl{
@@ -180,6 +160,7 @@ button{
 #help{
 	display:none;
 	width: 90%;
+	max-height: 750px;
 	box-sizing:border-box;
 	position: fixed;
 	top: 30px;
@@ -194,4 +175,58 @@ button{
 footer{
 	padding:20px 0px 5px 0px;
 	min-height:30px;
+}
+
+@media screen and (min-width: 600px){
+	#mainwrap{
+		width: 90%;
+		margin: auto;
+		border-radius: 10px;
+		text-align: center;
+	}
+
+	#centerx{
+		width: auto;
+		margin:auto;
+		overflow:hidden;
+	}
+	.choicesec,#help{
+		max-width: 750px;
+	}
+	.choicesec{
+		margin: 0px auto;
+		border-style: solid;
+		margin-bottom: -3px; /*hack to collapse borders*/
+		border-radius: 10px;
+		overflow:hidden;		
+		box-sizing: border-box;
+	}
+	.choicesec.last{
+		margin-bottom:0px;
+	}
+
+	.choicesec .headl{
+		padding: 15px 0px;
+		margin:0px;
+	}
+
+}
+@media screen and (min-width: 768px){
+	#mainwrap,#help{
+		width: 80%;
+	}
+	#help{
+		left:10%;
+	}
+}
+@media screen and (min-width: 950px){
+	#help{
+		/*set neg. margins to half the div's width 750*/
+		left:50%;
+		top:30%;
+		margin-left: -375px;
+	}
+}
+@media screen and (min-width: 1024px){
+	/*insert bg picture into mainwrap*/
 }
