@@ -1,9 +1,6 @@
 function Slider (){
 	//after sliding down, problemBuilder calls double up on each submit & slide down
 	console.log("slider clicked, start functionality.");
-	
-	
-	
 	this.slide = function(clickedElement){
 		var $content = $(clickedElement).closest(".choicesec").find(".cont");
 		console.log("after 1st line");
@@ -12,7 +9,9 @@ function Slider (){
 			$(".activeSlide").removeClass("activeSlide");
 			$content.addClass("activeSlide");
 
-			//problemBuilder($content);
+			var builder = new ProblemBuilder();
+			builder.build($content);
+			//insert ProblemBuilder as dependency injection argument & then call it
 
 			$content.slideDown(); //slide down only after problemBuilder has run.
 
