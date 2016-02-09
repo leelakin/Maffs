@@ -14,8 +14,9 @@ $(".choicesec").on("click", ".headl", function (event){
 
 $(".problem").on("click",".submit", function(event){
 	event.preventDefault();
-	var entered = $(this).closest(".problem").find(".field").val();
-	var checker = new ResultChecker(entered);
+	var $that = $(this);
+	var entered = $that.closest(".problem").find(".field").val();
+	var checker = new ResultChecker(entered, $that);
 });
 
 //NEW REFRESH CLICK EVENT
@@ -137,10 +138,61 @@ function ProblemBuilder($content){
 
 //NEW RESULTCHECKER
 
-function ResultChecker(entered){
+function ResultChecker(entered, submitEl){
 
 	alert("checking result " + entered + " against correct answer " + correctAnswer);
-	//correctAnswer 
+
+	//PASTED FROM OLD:
+	var enteredLength = entered.toString().length;
+	var $content = submitEl.closest(".choicesec").find(".cont");
+	var $bubble = $content.find(".bubble");
+
+	console.log("Does $content have class prime? " +$content.hasClass("prime"));
+
+	console.log("answer length is " + enteredLength);
+  
+	if(isNaN(entered) || entered ===""){
+		console.log("entered answer " + entered + " is NaN");
+		$bubble.text("Please enter a valid number! No letters or symbols.");
+		$content.find(".img").attr("src","tryagimg.png");
+	}else{
+		//limit length of number entered!
+		if($content.hasClass("prime") && enteredLength >= 6){
+			$bubble.text("Don't overdo it! Pick a slightly smaller number, please.");
+		}else if($content.hasClass("prime") && enteredLength < 6){
+			console.log("doing the prime checking thing. user entered number " + entered);
+			var primeCounter = 2; var divisors = [];
+			//iterate through possible, divisors, skipping 1 & own number
+			while(primeCounter < (entered / 2) + 1){
+				if(entered % primeCounter===0){
+					divisors.push(primeCounter);
+				};
+				primeCounter++;
+			};
+			console.log("divisors are " +divisors);
+
+			if(divisors.length > 1){
+				var lastDivisor = divisors.pop(); //separates last divisor for legibility
+				$bubble.html(entered+ " is <b>not</b> a prime number! Apart from 1 and " + entered + ", it can also be divided by <b>" + divisors + " and " + lastDivisor + "</b>.");
+			}else{
+				$bubble.html(entered+ " is a <b>prime number</b>! It can only be divided by the numbers 1 and " + entered + ".");
+				$content.find(".img").attr("src","rightimg.png");
+			};
+			
+		}else{
+			if(entered == correctAnswer){
+				console.log("correct answer " +entered+ ".");
+				$(".submit").off("click");
+				$content.find(".refresh").show();
+				$content.find(".img").attr("src","rightimg.png");
+				$bubble.html("<b>Well done!</b> The correct answer is " +correctAnswer+ ". Click below to solve the next problem!");
+			}else{
+				console.log("number " + entered + ", but wrong number");
+				$content.find(".img").attr("src","tryagimg.png");
+				$bubble.html("Wrong answer! But don't worry, try again! <br><img src=\"bulb.png\" class=\"bulb\"/> help");
+			};
+		};
+	};
 
 };
 
