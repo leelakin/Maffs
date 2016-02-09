@@ -1,5 +1,5 @@
 
-//---------EVENT LISTENERS----------
+//---------EVENT LISTENERS-----------------------------------------
 
 //NEW SLIDER CLICK EVENT
 
@@ -8,6 +8,14 @@ $(".choicesec").on("click", ".headl", function (event){
 	event.preventDefault();
 	var slider = new Slider();
 	slider.slide($(this)); //pass clicked element
+});
+
+//NEW SUBMIT CLICK EVENT
+
+$(".problem").on("click",".submit", function(event){
+	event.preventDefault();
+	var entered = $(this).closest(".problem").find(".field").val();
+	var checker = new ResultChecker(entered);
 });
 
 //NEW REFRESH CLICK EVENT
@@ -23,7 +31,8 @@ $(".cont").on("click", ".refresh", function(event){
 });
 
 
-//---------FUNCTIONS----------
+
+//---------FUNCTIONS-----------------------------------------------
 
 //NEW SLIDER
 
@@ -60,10 +69,10 @@ function ProblemBuilder($content){
 
 	this.build = function(){
 
-		console.log("problemBuilder.build runs.");
+		console.log("ProblemBuilder.build runs.");
 		var problemObj = this.generateMaths();
 
-		//add correct object attributes etc.
+		//add object attributes etc.
 		var problem = problemObj.nums[0]+ " <b>"+problemObj.symbol+"</b> " +problemObj.nums[1]+ " = <input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
 		
 		//this goes into this.insert()
@@ -122,6 +131,13 @@ function ProblemBuilder($content){
 
 };
 
+//NEW RESULTCHECKER
+
+function ResultChecker(entered){
+
+	alert("checking result " + entered);
+
+};
 
 
 /*
