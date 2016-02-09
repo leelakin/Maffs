@@ -1,83 +1,132 @@
+
+//---------EVENT LISTENERS----------
+
+//NEW SLIDER CLICK EVENT
+
 $(".choicesec").on("click", ".headl", function (event){
 	//after sliding down, problemBuilder calls double up on each submit & slide down
-	console.log("slider clicked, start functionality.");
 	event.preventDefault();
-	var $content = $(this).closest(".choicesec").find(".cont");
+	var slider = new Slider();
+	slider.slide($(this)); //pass clicked element
+});
+
+//NEW REFRESH CLICK EVENT
+
+$(".cont").on("click", ".refresh", function(event){
+	event.preventDefault();
+	var refreshBtn = $(this);
+	var $content = refreshBtn.closest(".cont");
+
+	//problemBuilder($content);
 	
-	if(!$content.is(".activeSlide")){//if the clicked slide isn't the active one
-		$(".activeSlide").slideUp();
-		$(".activeSlide").removeClass("activeSlide");
-		$content.addClass("activeSlide");
+	refreshBtn.hide();
+});
 
-		problemBuilder($content);
 
-		$content.slideDown(); //slide down only after problemBuilder has run.
+//---------FUNCTIONS----------
 
-	}else{ //if the clicked slide is the active one, slide it up.
-		$content.slideUp();
-		$(".activeSlide").removeClass("activeSlide");
+//NEW SLIDER
+
+function Slider(){
+
+	this.slide = function(clickedElement){
+
+		var $content = clickedElement.closest(".choicesec").find(".cont");
+
+		if(!$content.is(".activeSlide")){ //if the clicked slide isn't the active one
+			$(".activeSlide").slideUp(); //close all currently open slides first
+			$(".activeSlide").removeClass("activeSlide"); //& remove their class
+			$content.addClass("activeSlide"); //add class to new active slider
+
+			var builder = new ProblemBuilder($content);
+			builder.build(); //insert problem
+
+			$content.slideDown(); //slide down new active slide only after problemBuilder has run.
+
+		}else{ //if the clicked slide is the active one, slide it up.
+			$content.slideUp();
+			$(".activeSlide").removeClass("activeSlide");
+		};
+
 	};
-});
+};
 
+//NEW PROBLEMBUILDER
 
-$(document).on("click", ".refresh", function(){
-	var $content = $(this).closest(".cont");
-	problemBuilder($content); //this didn't pass properly before bc I removed $(this) before $content could get defined
-	$(this).hide();
-});
+function ProblemBuilder($content){
 
-
-var problemBuilder = function($content){ //passing content will keep the context (class)
 	var $bubble = $content.find(".bubble");
-	console.log("problemBuilder starts running.");
+	var isPrime = false;
 
-	if(!$content.hasClass("activeSlide")){ //if problemBuilder is still running on an old inactive slide, return.
-		console.log("returned!");
-		return;
+	this.build = function(){
+
+		console.log("problemBuilder.build runs.");
+		var problemObj = this.generateMaths();
+
+		//add correct object attributes etc.
+		var problem = problemObj.nums[0]+ " <b>"+problemObj.symbol+"</b> " +problemObj.nums[1]+ " = <input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
+		
+		//this goes into this.insert()
+		this.insert(problem);		
+
 	};
 
-	if($content.hasClass("prime")){
-		$bubble.html("<b>Prime Numbers</b> are numbers which can only be divided by 1 and themselves!")
-	}else{
-		$bubble.html("Maths is fun when you get the hang of it! <br><img src=\"bulb.png\" class=\"bulb\"/> help")
+	this.generateMaths = function(){
+
+		var x = Math.round((Math.random())*100); 
+		var y = Math.round((Math.random())*100);
+		var correctAnswer; var probSymbol;
+
+		if($content.hasClass("add")){
+			correctAnswer = x+y; probSymbol = "+";
+
+		}else if($content.hasClass("sub")){
+			while(y>x){
+				y = Math.round((Math.random())*100);
+			};
+			correctAnswer = x-y; probSymbol = "-";
+
+		}else if($content.hasClass("div")){
+			while(x%y!==0 || x==0 || y==0){
+				x = Math.round((Math.random())*100);
+				y = Math.round((Math.random())*100);
+			};
+			correctAnswer = x/y; probSymbol = "/";
+
+		}else if($content.hasClass("mult")){
+			x = Math.round((Math.random())*10); 
+			y = Math.round((Math.random())*10);
+			correctAnswer = x*y; probSymbol = "*";
+
+		}else{
+			if(!$content.hasClass("prime")){
+				isPrime = true;
+			};
+		};
+		return {symbol:probSymbol, nums:[x,y]}; //answer:correctAnswer for resultChecker
 	};
-	//create problem based on class
-	var x = Math.round((Math.random())*100); 
-	var y = Math.round((Math.random())*100);
-	var correctAnswer; var probSymbol;
-	if($content.hasClass("add")){
-		correctAnswer = x+y; probSymbol = "+";
-	}else if($content.hasClass("sub")){
-		while(y>x){
-			y = Math.round((Math.random())*100);
+
+	this.insert = function(problem){
+
+		if(isPrime){
+			console.log("it's prime");
+			$bubble.html("<b>Prime Numbers</b> are numbers which can only be divided by 1 and themselves!");
+			problem = "<input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
+		}else{
+			console.log("not prime");
+			$bubble.html("Maths is fun when you get the hang of it! <br><img src=\"bulb.png\" class=\"bulb\"/> help")
 		};
-		correctAnswer = x-y; probSymbol = "-";
-	}else if($content.hasClass("div")){
-		while(x%y!==0 || x==0 || y==0){
-			x = Math.round((Math.random())*100);
-			y = Math.round((Math.random())*100);
-		};
-		correctAnswer = x/y; probSymbol = "/";
-	}else if($content.hasClass("mult")){
-		x = Math.round((Math.random())*10); 
-		y = Math.round((Math.random())*10);
-		correctAnswer = x*y; probSymbol = "*";
-	}else{
-		if(!$content.hasClass("prime")){
-			alert("default triggered");
-		};
-	};
-	//insert custom problem
-	var problem;
-	if(!$content.hasClass("prime")){ //works
-		console.log("problem gets inserted for anything but prime");
-		problem = x+ " <b>"+probSymbol+"</b> " +y+ " = " + "<input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
-		$content.find(".problem").html(problem);		
-	}else if ($content.hasClass("prime")){ //why doesn't this work??
-		console.log("class was prime, insert problem");
-		problem = "<input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
+
 		$content.find(".problem").html(problem);
 	};
+
+};
+
+
+
+/*
+var problemBuilder = function($content){ //passing content will keep the context (class)
+	
 
 	//SUBMIT LISTENER
 	$(".submit").on("click", function(event){
@@ -167,3 +216,5 @@ $(document).on("click", ".bulb", function (event){
 		$("#help").hide();
 	});
 });
+
+*/
