@@ -30,7 +30,9 @@ $(".cont").on("click", ".refresh", function(event){
 	refreshBtn.hide();
 });
 
+//---------GLOBAL VARS---------------------------------------------
 
+var correctAnswer;
 
 //---------FUNCTIONS-----------------------------------------------
 
@@ -84,7 +86,8 @@ function ProblemBuilder($content){
 
 		var x = Math.round((Math.random())*100); 
 		var y = Math.round((Math.random())*100);
-		var correctAnswer; var probSymbol;
+		//var correctAnswer;
+		var probSymbol;
 
 		if($content.hasClass("add")){
 			correctAnswer = x+y; probSymbol = "+";
@@ -108,18 +111,19 @@ function ProblemBuilder($content){
 			correctAnswer = x*y; probSymbol = "*";
 
 		}else{
-			if(!$content.hasClass("prime")){
+			if($content.hasClass("prime")){
 				isPrime = true;
 			};
 		};
-		return {symbol:probSymbol, nums:[x,y]}; //answer:correctAnswer for resultChecker
+		//correctAnswer as global var OR invoke some function here to store it for resultChecker
+		return {symbol:probSymbol, nums:[x,y]};
 	};
 
 	this.insert = function(problem){
 
 		if(isPrime){
 			console.log("it's prime");
-			$bubble.html("<b>Prime Numbers</b> are numbers which can only be divided by 1 and themselves!");
+			$bubble.html("A <b>Prime Numbers</b> is a number which can only be divided by 1 and itself!");
 			problem = "<input type=\"text\" class=\"field\" placeholder=\"result\"> <button type=\"submit\" class=\"submit\">Enter</button>";
 		}else{
 			console.log("not prime");
@@ -135,7 +139,8 @@ function ProblemBuilder($content){
 
 function ResultChecker(entered){
 
-	alert("checking result " + entered);
+	alert("checking result " + entered + " against correct answer " + correctAnswer);
+	//correctAnswer 
 
 };
 
