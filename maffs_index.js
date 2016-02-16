@@ -38,27 +38,12 @@ $(".cont").on("click", ".refresh", function(event){
 $(".bubble").on("click", ".bulb", function(event){
 		event.preventDefault();
 	var $content = $(event.target).closest(".choicesec").find(".cont");
-	console.log("bulb clicked. $content classes: " +$content.attr("class"));
+
+	var helper = new Helper();
+	helper.getInfo($content);
 
 	$("#help").show();
-	
-	var helpClass = $content.attr("class").split(" ");
 
-	console.log("split array method shows class " +helpClass[0]);
-	//build custom ajax request, but put into new function
-	$.ajax({
-		url: "ajax_" +helpClass[0]+ ".html",
-		success: function(result){
-			$("#helptext").html(result);
-		},
-		error: function(request, errorType, errorMsg){
-			$("#helptext").text("Error! " +errorType+ " with message " +errorMsg);
-		},
-		timeOut: 4000,
-		beforesend: function(){
-			$("#helptext").text("Please wait, help loading...")
-		}
-	});
 });
 
 //NEW HELP CLOSE LISTENER
@@ -233,6 +218,34 @@ function ResultChecker(){
 				};
 			};
 		};
+	};
+
+};
+
+function Helper(){
+
+	this.getInfo = function($content){
+		
+		console.log("bulb clicked. $content classes: " +$content.attr("class"));
+
+		var helpClasses = $content.attr("class").split(" ");
+
+		console.log("split array method shows class " +helpClasses[0]);
+
+		$.ajax({
+			url: "ajax_" +helpClasses[0]+ ".html",
+			success: function(result){
+				$("#helptext").html(result);
+			},
+			error: function(request, errorType, errorMsg){
+				$("#helptext").text("Error! " +errorType+ " with message " +errorMsg);
+			},
+			timeOut: 4000,
+			beforesend: function(){
+				$("#helptext").text("Please wait, help loading...")
+			}
+		});
+
 	};
 
 };
