@@ -35,8 +35,9 @@ $(".cont").on("click", ".refresh", function(event){
 
 //NEW HELP LISTENER
 
+//add mouseover lit bulb event
 $(".bubble").on("click", ".bulb", function(event){
-		event.preventDefault();
+	event.preventDefault();
 	var $content = $(event.target).closest(".choicesec").find(".cont");
 
 	var helper = new Helper();
@@ -44,6 +45,10 @@ $(".bubble").on("click", ".bulb", function(event){
 
 	$("#help").show();
 
+})
+.on("mouseenter mouseleave", ".bulb", function(event){
+	event.preventDefault();
+	bulbSwitch();
 });
 
 //NEW HELP CLOSE LISTENER
@@ -258,3 +263,15 @@ function Helper(){
 	};
 
 };
+
+function bulbSwitch(){
+	if (!$(".bulb").hasClass("bulbon")){
+		$(".bulb").addClass("bulbon");
+		$(".bulb").attr("src", "bulb2.png");
+	}else{
+		$(".bulb").removeClass("bulbon");
+		$(".bulb").attr("src", "bulb.png");
+	};
+};
+
+
