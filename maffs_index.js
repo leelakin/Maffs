@@ -167,7 +167,7 @@ function ResultChecker(){
 
 	this.check = function(entered, submitEl){
 
-		console.log("checking result " + entered + " against correct answer " + correctAnswer);
+		console.log("checking result...");
 
 		var enteredLength = entered.toString().length;
 		$content = submitEl.closest(".choicesec").find(".cont");
@@ -186,11 +186,18 @@ function ResultChecker(){
 				$bubble.text("Don't overdo it! Pick a slightly smaller number, please.");
 			}else if($content.hasClass("prime") && enteredLength < 6){
 				console.log("doing the prime checking thing. user entered number " + entered);
-				var primeCounter = 2; var divisors = [];
+				var primeCounter = 2;
+				var divisors = [];
 				//iterate through possible, divisors, skipping 1 & own number
 				while(primeCounter < (entered / 2) + 1){
 					if(entered % primeCounter===0){
+
+						console.log("found divisor " + primeCounter);
+
 						divisors.push(primeCounter);
+						//PROBLEM: doesn't list 2 as divisor of 4, but of 6
+						//(problem: just 1 extra divisor doesn't get pushed into array? Same with 9)
+						
 					};
 					primeCounter++;
 				};
@@ -199,7 +206,9 @@ function ResultChecker(){
 				if(divisors.length > 1){
 					var lastDivisor = divisors.pop(); //separates last divisor for legibility
 					$bubble.html(entered+ " is <b>not</b> a prime number! Apart from 1 and " + entered + ", it can also be divided by <b>" + divisors + " and " + lastDivisor + "</b>.");
-				}else{
+				}else if(divisors.length === 1){
+					$bubble.html(entered+ " is <b>not</b> a prime number! Apart from 1 and " + entered + ", it can also be divided by <b>" + divisors + "</b>.");
+				}else{ //if no other divisors, array length 0
 					$bubble.html(entered+ " is a <b>prime number</b>! It can only be divided by the numbers 1 and " + entered + ".");
 					$content.find(".img").attr("src","rightimg.png");
 				};
